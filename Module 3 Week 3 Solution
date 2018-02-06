@@ -1,0 +1,36 @@
+1)
+
+data <- read.csv(fileDest)
+agricultureLogical <- data$ACR == 3 & data$AGS == 6
+head(which(agricultureLogical), 3)
+
+2)
+
+library(jpeg)
+download.file(fileUrl, fileDest, mode = "wb")
+jpg <- readJPEG(fileDest, native = TRUE)
+quantile(jpg, probs = c(0.3, 0.8))
+
+
+3)
+
+download.file(file1Url, dest1, mode = 'wb')
+download.file(file2Url, dest2, mode = 'wb')
+
+FGDP <- fread(dest1, skip = 4, nrows = 190, select = c(1,2,4,5), col.names = c("CountryCode", "Rank", "Economy", "Total"))
+FEDSTATS <- fread(dest2)
+merge(FGDP, FEDSTATS, by = 'CountryCode')
+  
+library(dplyr)
+data_arrange <- arrange(mergedDT, desc(Rank))
+data_arrange[13, "Economy"]
+
+4)
+
+tapply(data_arrange$Rank, data_arrange$'Income Group', mean)
+
+5)
+
+mergedDT$RankGroups <- cut2(mergedDT$Rank, g = 5)
+table(mergedDT$RankGroups, mergedDT$'Income Group')
+
